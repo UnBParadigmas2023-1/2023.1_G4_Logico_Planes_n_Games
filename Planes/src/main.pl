@@ -203,7 +203,7 @@ main :-
     NumberOfStations is 10,           % Quantidade de estações de monitoramento (círculos na tela)
 
     new(D, picture('Sistema de Controle de Tráfego Aéreo')),
-    send(D, size, size(720, 720)),
+    send(D, size, size(920, 800)),
     
     % Cria um objeto bitmap para a imagem
     new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
