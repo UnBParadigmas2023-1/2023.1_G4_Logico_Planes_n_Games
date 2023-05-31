@@ -6,8 +6,10 @@
 % Para executar, use o comando: 'swipl main.pl'
 
 % Dynamic predicates
-:- dynamic point/3.       % X, Y, Raio
-:- dynamic distance/5.    % X1, Y1, X2, Y2, Distancia
+:- dynamic point/3.                 % X, Y, Raio
+:- dynamic distance/5.              % X1, Y1, X2, Y2, Distancia
+:- dynamic user_point_start/2.      % 
+:- dynamic user_point_stop/2.       % 
 
 % Predicado para desenhar círculos aleatórios espalhados
 draw_random_circles(D, Quantity) :-             % D- Instância da tela, Quantity - quantidade de círcul
@@ -141,9 +143,9 @@ update_position(_, _, _, _, _, _, T) :-
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
 update_position(X1, Y1, X2, Y2, D, C1, T) :-
-    writeln('Atualizando o eixo X e Y'),
-    write('('),write(X1),write(','),write(Y1),write(')'),
-    write(' - ('),write(X2),write(','),write(Y2),writeln(')'),
+    % writeln('Atualizando o eixo X e Y'),
+    % write('('),write(X1),write(','),write(Y1),write(')'),
+    % write(' - ('),write(X2),write(','),write(Y2),writeln(')'),
 
     sleep(0.300),
     send(C1, center, point(X1, Y1)),
@@ -198,6 +200,50 @@ obter_predicado_aleatorio(Lista, Predicado, NovaLista) :-
 % Removendo um predicado da lista
 remover_predicado(Predicado) :-
     retract(Predicado).
+
+% Exibe os botões para o usuário selecionar a origem e o destino
+handle_buttons_on_interface([], D, _, _).
+handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
+    arg(1, Predicado, X),
+
+    arg(2, Predicado, Tail),
+    arg(1, Tail, Y),
+
+    write('Ponto ('),write(X),write(','),write(Y),writeln(')'),
+
+    handle_button_of_state(X, Y, D, P1, P2),
+
+    NewP2 is P2 + 20,
+
+    handle_buttons_on_interface(Predicados, D, P1, NewP2).
+
+% Cria o botão na tela
+handle_button_of_state(X, Y, D, P1, P2) :-      % Conjunto de pontos(X,Y), instância da tela, valores da posição de onde os pontos são exibidos (P1, P2)
+    new(Botao, button('Maranhão')),
+    send(Botao, message, message(@prolog, handle_click, X, Y, D)),
+    send(Botao, position, point(P1, P2)),
+    send(D, display, Botao).
+
+% Trata o click do inicio
+handle_click(X, Y, _) :-
+    \+ user_point_start(_,_),           % Isso será verdade somente quando o a regra falhar para qualquer ponto X, Y. Isso indica que o usuário ainda não informou o ponto de origem
+    assertz(user_point_start(X,Y)),
+    write('Registrando inicio da localização: ('),write(X),write(','),write(Y),write(')'),nl.
+
+% Trata o click
+handle_click(X, Y, D) :-
+    \+ user_point_stop(_,_),            % Isso será verdade somente quando o a regra falhar para qualquer ponto X, Y. Isso indica que o usuário ainda não informou o ponto de destino
+    assertz(user_point_stop(X,Y)),
+    write('Registrando fim da localização: ('),write(X),write(','),write(Y),write(')'),nl,
+
+    % Com o ponto final, é possivel movimentar o avião
+    user_point_start(Xi, Yi),
+
+    thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []),
+
+    % Limpo a base para os ponto incial e final para que o usuário possa escolher novamente
+    retract(user_point_start(_,_)),
+    retract(user_point_stop(_,_)).
 
 main :-
     NumberOfStations is 10,           % Quantidade de estações de monitoramento (círculos na tela)
@@ -282,6 +328,8 @@ main :-
     % writeln('Px2:'),writeln(A2),writeln(B2),
     % writeln('Px3:'),writeln(A3),writeln(B3),
     % writeln('Px4:'),writeln(A4),writeln(B4),
+
+    handle_buttons_on_interface(ListOfPointers, D, 10, 400),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
