@@ -5,60 +5,46 @@
 % ir(nome_do_lugar) - Se movimenta para o lugar inserido (atualmente so quarto e banheiro disponivel).
 % acao(nome_do_alvo) - Interage com um objeto alvo (no momento apenas acao(mesa) para o quarto, e acao(pia) estao disponiveis).
 
-:- dynamic posicao/1.
-posicao(quarto).
+:- consult('gamedata.pl').
+
+
+:- dynamic position/1.
+position(car).
 
 :- nl,write('Bem vindo ao jogo!!'),nl.
 :- write('Para ver o tutorial, digite help.'),nl,nl.
 
 
 game :-
-    posicao(Pos),
-    nl,write('Voce esta em: '), write(Pos),nl,
-    texto_acao(Pos, Out),
-    write(Out),nl,nl,
     write('> '),
     read(X),
     call(X),
     game.
 
-acao(X):- 
+use(X):- 
     interacao(X, Y), 
     nl,write(Y),nl.
 
-ir(X):- 
-    retract(posicao(Pos)),
-    Fact =.. [posicao, X],
+go_to(X):- 
+    position(Z),
+    door(Z, X),!,
+    retract(position(Z)),
+    Fact =.. [position, X],
     assert(Fact),
-    posicao(Pos),
-    texto(Pos,Out),
-    nl,nl,write(Out),nl.
+    standard_text.
 
 help :-
     nl,write('Os principais comandos utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
 
-lookaround(X):-
+lookaround:-
+    position(X),
     look_around(X, A),
     nl,write(A),nl.
 
-standard_text(X):-
+standard_text:-
+    position(X),
     text(X, T),
     nl,write(T),nl.
-
-
-texto(quarto, 'Voce esta no quarto e voce ve uma cama e uma mesa.').
-texto(banheiro, 'Voce chega no banheiro e ve uma pia ').
-
-texto_acao(quarto, 'Acoes: acao(mesa), acao(cama).').
-texto_acao(banheiro, 'Acoes: acao(pia)').
-
-
-
-interacao(mesa, 'Voce encontra uma chave').
-interacao(pia, 'Voce liga e desliga a torneira, vendo que ela esta funcionando').
-
-lugar(banheiro).
-lugar(quarto).
 
 text(car,'You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
 text(house,'The house is grand, sat perfectly amongst the trees.\n\nIn front of you is the front door, and the yard stretches around the side of the house.').
