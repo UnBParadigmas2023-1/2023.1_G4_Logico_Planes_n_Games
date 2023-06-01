@@ -35,7 +35,12 @@ ir(X):-
     nl,nl,write(Out),nl.
 
 help :-
-    nl,write('Comandos comumente utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
+    nl,write('Os principais comandos utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
+
+lookaround(X):-
+    look_around(X, A),
+    nl,write(A),nl.
+
 
 
 texto(quarto, 'Voce esta no quarto e voce ve uma cama e uma mesa.').
@@ -52,4 +57,13 @@ interacao(pia, 'Voce liga e desliga a torneira, vendo que ela esta funcionando')
 lugar(banheiro).
 lugar(quarto).
 
-look_around(car, 'you can see ')
+look_around(car,'It\'s a nice clean car. Not much to see, but there is a glove box.').
+look_around(house,'the trees strech up to the night sky. There is the house and the yard.').
+look_around(yard,'You see a generator on the back wall of the house').
+look_around(hallway,'The hallway is a pleasant welcome to the home. Airy and fresh.').
+look_around('living room', 'There is nothing here of interest.').
+look_around(kitchen,'It\'s very clean and tidy. Not been used in a while.').
+look_around('stairwell landing', 'A standard landing. There are picture frames covering one wall.').
+look_around(bathroom, 'The bathroom is clean. A large mirror sits above the sink.').
+look_around('sisters room','There is also a large wardrobe in the corner of the room - the door slightly ajar.').
+look_around('my room','It\'s a standard bedroom. A desk, a woodgrained TV. The usual.').
