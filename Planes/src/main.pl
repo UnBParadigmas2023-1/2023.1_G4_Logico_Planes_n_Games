@@ -15,7 +15,7 @@
 :- dynamic user_point_start/2.      % 
 :- dynamic user_point_stop/2.       % 
 
-
+% Predicado para limpar as impressoes de voos na tela
 iterar_prints(_, []):-
     write('tem nada aqui nao').
 iterar_prints(D, [Predicado|Predicados]) :-
@@ -43,6 +43,7 @@ iterar_pontos(D, [Predicado|Predicados]) :-
 
     iterar_pontos(D, Predicados).
 
+% Predicado para imprimir os voos ocorrendo na tela
 iterar_voo(_, [], _).
 iterar_voo(D, [Predicado|Predicados], Posy) :-
 
