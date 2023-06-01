@@ -126,6 +126,9 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     arg(1, PointB, X2), % obtem o ponto X2
     arg(2, PointB, Y2), % obtem o ponto Y2
 
+    new(L, line(X1, Y1, X2, Y2)),
+
+    send(D, display, L), 
     % Criação de um círculo que representa o avião
     new(C1, circle(10)), 
 
@@ -212,7 +215,7 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
 
     arg(2, Tail, Tail2),
     arg(2, Tail2, Nome),
-    
+
     write('Ponto ('),write(X),write(','),write(Y),writeln(')'),
 
     handle_button_of_state(X, Y, Nome, D, P1, P2),
@@ -280,7 +283,7 @@ main :-
     writeln(ListOfPointersWithDistance),
 
     % intera sobre os pontos x1, y1, x2, y2 e desenha uma linha de conexão
-    draw_line_connection(ListOfPointersWithDistance, D),
+    % draw_line_connection(ListOfPointersWithDistance, D),
 
     % Imprime os pontos para o usuário selecionar
     iterar_predicados(ListOfPointers),
