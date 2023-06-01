@@ -32,19 +32,24 @@ iterar_pontos(D, [Predicado|Predicados]) :-
 
 iterar_voo(_, [], _).
 iterar_voo(D, [Predicado|Predicados], Posy) :-
+
     arg(1, Predicado, X),
     arg(2, Predicado, Y),
 
     write('('),write(X),write(','),write(Y),writeln(')'),
-    new(L1, text('Belo Horizonte')),
-    send(L1, position, point(Posy, 300) ),
-    new(L2, text( ' -> ')),
-    send(L2, position, point(Posy, 320) ),
-    new(L3, text(Y)),
-    send(L3, position, point(Posy, 340) ),
-    send(D, append, L1),
-    send(D, append,L2),
-    send(D, append,L3),
+    new(T1, text(X)),
+    % mostra o texto na posicao desejada
+    send(D, display, T1, point(783, Posy)),
+    
+    new(T2, text(' -> ')),
+    % mostra o texto na posicao desejada
+    send(D, display, T2, point(870, Posy)),
+
+    new(T3, text(Y)),
+    % mostra o texto na posicao desejada
+    send(D, display, T3, point(890, Posy)),
+
+    write('opaa'),
     Newy is Posy + 20,
     iterar_voo(D, Predicados, Newy).
 
@@ -139,7 +144,6 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     point(X2, Y2, _, Name2),
     assertz(flight(Name1, Name2)),
     findall((X, Y), flight(X, Y), ListOfflights),
-    iterar_voo(D, ListOfflights, 790),
     new(L, line(X1, Y1, X2, Y2)),
 
     send(D, display, L), 
@@ -149,6 +153,8 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     send(C1, center, point(X1, Y1)),
     send(C1, fill_pattern, colour(blue)),
     send(D, display, C1),
+
+    iterar_voo(D, ListOfflights, 400),
 
     update_position(X1, Y1, X2, Y2, D, C1, 0, L, Name1).
 
