@@ -11,10 +11,23 @@
 :- dynamic point/3.                 % X, Y, Nome
 :- dynamic flight/2.                % Nome1, Nome2
 :- dynamic distance/5.              % X1, Y1, X2, Y2, Distancia
+:- dynamic infoVoo/1.               %
 :- dynamic user_point_start/2.      % 
 :- dynamic user_point_stop/2.       % 
 
-% Predicado para desenhar círculos aleatórios espalhados
+
+iterar_prints(_, []):-
+    write('tem nada aqui nao').
+iterar_prints(D, [Predicado|Predicados]) :-
+    
+    send(Predicado, destroy),
+
+    retract(infoVoo(Predicado)),
+
+    iterar_prints(D, Predicados).
+
+
+% Predicado para desenhar círculos espalhados
 iterar_pontos(_, []).
 iterar_pontos(D, [Predicado|Predicados]) :-
     arg(1, Predicado, X),
@@ -48,6 +61,10 @@ iterar_voo(D, [Predicado|Predicados], Posy) :-
     new(T3, text(Y)),
     % mostra o texto na posicao desejada
     send(D, display, T3, point(890, Posy)),
+    assertz(infoVoo(T1)),
+    assertz(infoVoo(T2)),
+    assertz(infoVoo(T3)),
+
 
     write('opaa'),
     Newy is Posy + 20,
@@ -154,12 +171,15 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     send(C1, fill_pattern, colour(blue)),
     send(D, display, C1),
 
+    findall((L), infoVoo(L), _),
+    findall((L2), infoVoo(L2), ListOfprints2),
+    iterar_prints(D, ListOfprints2),
     iterar_voo(D, ListOfflights, 400),
 
     update_position(X1, Y1, X2, Y2, D, C1, 0, L, Name1).
 
 % Condição de parada: Eixo X e Y coincidiram com o objetivo
-update_position(_, _, X2, Y2, _, C, T, L, Name1) :-
+update_position(_, _, X2, Y2, D, C, T, L, Name1) :-
     % Quando um valor muito pequeno é utilizado para o incremento de T, maior é a dificuldade em se atingir exatamente o 
     % valor de (X2, Y2), por isso, ao invés de verificar se o ponto inicial já é igual ao ponto final,
     % optei por basear a condição de parada no valor do coeficiente T, o que atinge um certo valor ao chegar no ponto final
@@ -169,6 +189,13 @@ update_position(_, _, X2, Y2, _, C, T, L, Name1) :-
     write('opa, vai um paozin de queijo ai?'),
     point(X2, Y2, _, Name2),
     retract(flight( Name1, Name2)),
+
+    findall((X, Y), flight(X, Y), ListOfflights),
+    findall((L), infoVoo(L), ListOfprints),
+    findall((L2), infoVoo(L2), ListOfprints2),
+    write(ListOfprints2),
+    iterar_prints(D, ListOfprints2),
+    iterar_voo(D, ListOfflights, 400),
     write(flight(Name1, Name2)).
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
