@@ -11,10 +11,23 @@
 :- dynamic point/3.                 % X, Y, Nome
 :- dynamic flight/2.                % Nome1, Nome2
 :- dynamic distance/5.              % X1, Y1, X2, Y2, Distancia
+:- dynamic infoVoo/1.               %
 :- dynamic user_point_start/2.      % 
 :- dynamic user_point_stop/2.       % 
 
-% Predicado para desenhar círculos aleatórios espalhados
+% Predicado para limpar as impressoes de voos na tela
+iterar_prints(_, []):-
+    write('tem nada aqui nao').
+iterar_prints(D, [Predicado|Predicados]) :-
+    
+    send(Predicado, destroy),
+
+    retract(infoVoo(Predicado)),
+
+    iterar_prints(D, Predicados).
+
+
+% Predicado para desenhar círculos espalhados
 iterar_pontos(_, []).
 iterar_pontos(D, [Predicado|Predicados]) :-
     arg(1, Predicado, X),
@@ -29,6 +42,34 @@ iterar_pontos(D, [Predicado|Predicados]) :-
     draw_circles(D, X,Y,Raio),
 
     iterar_pontos(D, Predicados).
+
+% Predicado para imprimir os voos ocorrendo na tela
+iterar_voo(_, [], _).
+iterar_voo(D, [Predicado|Predicados], Posy) :-
+
+    arg(1, Predicado, X),
+    arg(2, Predicado, Y),
+
+    write('('),write(X),write(','),write(Y),writeln(')'),
+    new(T1, text(X)),
+    % mostra o texto na posicao desejada
+    send(D, display, T1, point(783, Posy)),
+    
+    new(T2, text(' -> ')),
+    % mostra o texto na posicao desejada
+    send(D, display, T2, point(870, Posy)),
+
+    new(T3, text(Y)),
+    % mostra o texto na posicao desejada
+    send(D, display, T3, point(890, Posy)),
+    assertz(infoVoo(T1)),
+    assertz(infoVoo(T2)),
+    assertz(infoVoo(T3)),
+
+
+    write('opaa'),
+    Newy is Posy + 20,
+    iterar_voo(D, Predicados, Newy).
 
 % Predicado para desenhar os pontos
 draw_circles(D, X, Y, Raio) :-
@@ -120,6 +161,7 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     point(X1, Y1, _, Name1),
     point(X2, Y2, _, Name2),
     assertz(flight(Name1, Name2)),
+    findall((X, Y), flight(X, Y), ListOfflights),
     new(L, line(X1, Y1, X2, Y2)),
 
     send(D, display, L), 
@@ -130,10 +172,15 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     send(C1, fill_pattern, colour(blue)),
     send(D, display, C1),
 
+    findall((L), infoVoo(L), _),
+    findall((L2), infoVoo(L2), ListOfprints2),
+    iterar_prints(D, ListOfprints2),
+    iterar_voo(D, ListOfflights, 400),
+
     update_position(X1, Y1, X2, Y2, D, C1, 0, L, Name1).
 
 % Condição de parada: Eixo X e Y coincidiram com o objetivo
-update_position(_, _, X2, Y2, _, C, T, L, Name1) :-
+update_position(_, _, X2, Y2, D, C, T, L, Name1) :-
     % Quando um valor muito pequeno é utilizado para o incremento de T, maior é a dificuldade em se atingir exatamente o 
     % valor de (X2, Y2), por isso, ao invés de verificar se o ponto inicial já é igual ao ponto final,
     % optei por basear a condição de parada no valor do coeficiente T, o que atinge um certo valor ao chegar no ponto final
@@ -143,6 +190,13 @@ update_position(_, _, X2, Y2, _, C, T, L, Name1) :-
     write('opa, vai um paozin de queijo ai?'),
     point(X2, Y2, _, Name2),
     retract(flight( Name1, Name2)),
+
+    findall((X, Y), flight(X, Y), ListOfflights),
+    findall((L), infoVoo(L), _),
+    findall((L2), infoVoo(L2), ListOfprints2),
+    write(ListOfprints2),
+    iterar_prints(D, ListOfprints2),
+    iterar_voo(D, ListOfflights, 400),
     write(flight(Name1, Name2)).
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
@@ -200,7 +254,7 @@ remover_predicado(Predicado) :-
     retract(Predicado).
 
 % Exibe os botões para o usuário selecionar a origem e o destino
-handle_buttons_on_interface([], D, _, _).
+handle_buttons_on_interface([], _, _, _).
 handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
     arg(1, Predicado, X),
 
@@ -214,7 +268,7 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
 
     handle_button_of_state(X, Y, Nome, D, P1, P2),
 
-    NewP2 is P2 + 20,
+    NewP2 is P2 + 22,
 
     handle_buttons_on_interface(Predicados, D, P1, NewP2).
 
@@ -245,13 +299,14 @@ handle_click(X, Y, D) :-
     retract(user_point_start(_,_)),
     retract(user_point_stop(_,_)),
     \+ flight(Name1, Name2),
+    Name1 \= Name2,
     thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []).
 
 
 main :-
 
     new(D, picture('Sistema de Controle de Trafego Aereo')),
-    send(D, size, size(920, 800)),
+    send(D, size, size(1100, 920)),
     
     % Cria um objeto bitmap para a imagem
     new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
@@ -315,9 +370,10 @@ main :-
     % writeln('Px3:'),writeln(A3),writeln(B3),
     % writeln('Px4:'),writeln(A4),writeln(B4),
 
-    handle_buttons_on_interface(ListOfPointers2, D, 10, 400),
+    handle_buttons_on_interface(ListOfPointers2, D, 20, 343),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
+    sleep(0.5),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
 
     thread_join(ThreadId1, _),
