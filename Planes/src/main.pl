@@ -38,16 +38,6 @@ draw_circles(D, X, Y, Raio) :-
     send(C, fill_pattern, colour(red)),
     send(D, display, C).
 
-% Predicado para gerar uma posição aleatória para o centro do círculo
-random_position(MaxX, MaxY, Raio, X, Y) :-
-    XMin is Raio,
-    YMin is Raio,
-    XMax is MaxX - Raio,
-    YMax is MaxY - Raio,
-
-    random_between(XMin, XMax, X),              % Define um posição aleatória para a coordenada x
-    random_between(YMin, YMax, Y).              % Define um posição aleatória para a coordenada y
-
 % Predicado para calcular a distância entre dois pontos.
 % A distância entre dois pontos em um plano bidimensional 
 % pode ser calculada utilizando a fórmula da distância euclidiana.
@@ -192,12 +182,6 @@ iterar_predicados([Predicado|Predicados]) :-
 
     iterar_predicados(Predicados).
 
-% Regra para obter um predicado aleatório da lista
-% obter_predicado_aleatorio(ListaPredicados, Predicado) :-
-%    length(ListaPredicados, Len), % Obter o comprimento da lista de predicados
-%    random(0, Len, Indice), % Gerar um índice aleatório
-%    nth0(Indice, ListaPredicados, Predicado). % Obter o predicado correspondente ao índice
-
 % Obter e remover predicado aleatório
 obter_predicado_aleatorio(Lista, Predicado, NovaLista) :-
     random_member(Predicado, Lista),
@@ -284,25 +268,14 @@ main :-
     writeln('Predicado para a distância entre os pontos:'),
     writeln(ListOfPointersWithDistance),
 
-    % intera sobre os pontos x1, y1, x2, y2 e desenha uma linha de conexão
-    % draw_line_connection(ListOfPointersWithDistance, D),
-
     % Imprime os pontos para o usuário selecionar
     iterar_predicados(ListOfPointers),
-    
-    % Caso em que os pontos de partida são menores que os pontos de chegada
-    % move_point(point(15,20,10), point(60,900,40), D).
-
-    % Caso em que os pontos de partida são maiores que os pontos de chegada
-    % move_point(point(50,90,40), point(15,20,10), D).
 
     obter_predicado_aleatorio(ListOfPointers, RandomPointer1, NewListOfPointers1),
     
     arg(1, RandomPointer1, A1),
     arg(2, RandomPointer1, Tail1),
     arg(1, Tail1, B1),
-
-    % remover_predicado(point(A1, B1, _)),
     
     obter_predicado_aleatorio(NewListOfPointers1, RandomPointer2, NewListOfPointers2),
 
@@ -310,23 +283,17 @@ main :-
     arg(2, RandomPointer2, Tail2),
     arg(1, Tail2, B2),
 
-    % remover_predicado(point(A2, B2, _)),
-
     obter_predicado_aleatorio(NewListOfPointers2, RandomPointer3, NewListOfPointers3),
 
     arg(1, RandomPointer3, A3),
     arg(2, RandomPointer3, Tail3),
     arg(1, Tail3, B3),
 
-    % remover_predicado(point(A3, B3, _)),
-
     obter_predicado_aleatorio(NewListOfPointers3, RandomPointer4, _),
 
     arg(1, RandomPointer4, A4),
     arg(2, RandomPointer4, Tail4),
     arg(1, Tail4, B4),
-
-    % remover_predicado(point(A4, B4, _)),
 
     write('Ponto aleatorio: '),writeln(RandomPointer1),
     write('Ponto aleatorio: '),writeln(RandomPointer2),
@@ -342,7 +309,6 @@ main :-
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
-    % thread_create(move_point(point(30,35,40), point(50,90,40), D), ThreadId2, []),
 
     thread_join(ThreadId1, _),
     thread_join(ThreadId2, _).
