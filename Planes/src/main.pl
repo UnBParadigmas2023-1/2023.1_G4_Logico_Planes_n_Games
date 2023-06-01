@@ -8,7 +8,8 @@
 % Para executar, use o comando: 'swipl main.pl'
 
 % Dynamic predicates
-:- dynamic point/3.                 % X, Y, Raio
+:- dynamic point/3.                 % X, Y, Nome
+:- dynamic flight/2.                % Nome1, Nome2
 :- dynamic distance/5.              % X1, Y1, X2, Y2, Distancia
 :- dynamic user_point_start/2.      % 
 :- dynamic user_point_stop/2.       % 
@@ -116,6 +117,9 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     arg(1, PointB, X2), % obtem o ponto X2
     arg(2, PointB, Y2), % obtem o ponto Y2
 
+    point(X1, Y1, _, Name1),
+    point(X2, Y2, _, Name2),
+    assertz(flight(Name1, Name2)),
     new(L, line(X1, Y1, X2, Y2)),
 
     send(D, display, L), 
@@ -126,19 +130,23 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     send(C1, fill_pattern, colour(blue)),
     send(D, display, C1),
 
-    update_position(X1, Y1, X2, Y2, D, C1, 0, L).
+    update_position(X1, Y1, X2, Y2, D, C1, 0, L, Name1).
 
 % Condição de parada: Eixo X e Y coincidiram com o objetivo
-update_position(_, _, _, _, _, C, T, L) :-
+update_position(_, _, X2, Y2, _, C, T, L, Name1) :-
     % Quando um valor muito pequeno é utilizado para o incremento de T, maior é a dificuldade em se atingir exatamente o 
     % valor de (X2, Y2), por isso, ao invés de verificar se o ponto inicial já é igual ao ponto final,
     % optei por basear a condição de parada no valor do coeficiente T, o que atinge um certo valor ao chegar no ponto final
     T > 0.125,
     send(C, destroy),
-    send(L, destroy).
+    send(L, destroy),
+    write('opa, vai um paozin de queijo ai?'),
+    point(X2, Y2, _, Name2),
+    retract(flight( Name1, Name2)),
+    write(flight(Name1, Name2)).
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
-update_position(X1, Y1, X2, Y2, D, C1, T, L) :-
+update_position(X1, Y1, X2, Y2, D, C1, T, L, Name1) :-
     % writeln('Atualizando o eixo X e Y'),
     % write('('),write(X1),write(','),write(Y1),write(')'),
     % write(' - ('),write(X2),write(','),write(Y2),writeln(')'),
@@ -159,7 +167,7 @@ update_position(X1, Y1, X2, Y2, D, C1, T, L) :-
     arg(1, LinePoint, NewX1),
     arg(2, LinePoint, NewY1),
 
-    update_position(NewX1, NewY1, X2, Y2, D, C1, NewT, L).
+    update_position(NewX1, NewY1, X2, Y2, D, C1, NewT, L, Name1).
 
 % Regra para calcular as coordenadas do ponto ao longo da linha entre A e B
 % utilizando a equação paramétrica da reta
@@ -231,12 +239,14 @@ handle_click(X, Y, D) :-
 
     % Com o ponto final, é possivel movimentar o avião
     user_point_start(Xi, Yi),
-
-    thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []),
-
+    point(Xi,Yi,_,Name1),
+    point(X,Y,_,Name2),
     % Limpo a base para os ponto incial e final para que o usuário possa escolher novamente
     retract(user_point_start(_,_)),
-    retract(user_point_stop(_,_)).
+    retract(user_point_stop(_,_)),
+    \+ flight(Name1, Name2),
+    thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []).
+
 
 main :-
 
