@@ -3,6 +3,8 @@
 :- use_module(library(pce)).
 :- use_module(library(random)).
 
+:- consult('points.pl').
+
 % Para executar, use o comando: 'swipl main.pl'
 
 % Dynamic predicates
@@ -12,30 +14,29 @@
 :- dynamic user_point_stop/2.       % 
 
 % Predicado para desenhar círculos aleatórios espalhados
-draw_random_circles(D, Quantity) :-             % D- Instância da tela, Quantity - quantidade de círcul
-    draw_circles(D, Quantity).
+iterar_pontos(_, []).
+iterar_pontos(D, [Predicado|Predicados]) :-
+    arg(1, Predicado, X),
+
+    arg(2, Predicado, Tail),
+    arg(1, Tail, Y),
+
     
-    % Descomente estas linhas para atualizar os pontos em tela a cada 1s
-    % sleep(1),
-    % send(D, clear),
-    % draw_random_circles(D, Quantity).
+    arg(2, Tail, Raio),
+    write('('),write(X),write(','),write(Y),writeln(')'),
+
+    draw_circles(D, X,Y,Raio),
+
+    iterar_pontos(D, Predicados).
 
 % Predicado para desenhar os pontos
-draw_circles(_, 0).                             % Instância da tela, quantidade de círculos
-draw_circles(D, Quantity) :-
-    Raio is 20,                                 % Tamanho do raio dos pontos
+draw_circles(D, X, Y, Raio) :-
 
-    random_position(720, 720, Raio, X, Y),      % Width, Height, Raio, Valor da coordenada X e Y que foi gerado. Gera uma posição aleatória para o centro do círculo com base no tamanho da tela fornecido
     new(C, circle(Raio)),
-
-    assert(point(X, Y, Raio)),                  % Adiciona o ponto a base de conhecimento 
 
     send(C, center, point(X, Y)),
     send(C, fill_pattern, colour(red)),
-    send(D, display, C),
-
-    NewQuantity is Quantity - 1,
-    draw_circles(D, NewQuantity).
+    send(D, display, C).
 
 % Predicado para gerar uma posição aleatória para o centro do círculo
 random_position(MaxX, MaxY, Raio, X, Y) :-
@@ -246,9 +247,8 @@ handle_click(X, Y, D) :-
     retract(user_point_stop(_,_)).
 
 main :-
-    NumberOfStations is 10,           % Quantidade de estações de monitoramento (círculos na tela)
 
-    new(D, picture('Sistema de Controle de Tráfego Aéreo')),
+    new(D, picture('Sistema de Controle de Trafego Aereo')),
     send(D, size, size(920, 800)),
     
     % Cria um objeto bitmap para a imagem
@@ -262,9 +262,10 @@ main :-
     send(D, display, B),
     send(D, open),
     
-    draw_random_circles(D, NumberOfStations),
 
-    findall((X, Y, Raio), point(X, Y, Raio), ListOfPointers),
+    findall((X, Y, Raio), point(X, Y, Raio, _), ListOfPointers),
+    
+    iterar_pontos(D, ListOfPointers),
     
     writeln('Predicados para os pontos:'),
     writeln(ListOfPointers),
