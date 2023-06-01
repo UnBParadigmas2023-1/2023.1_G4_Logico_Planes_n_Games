@@ -115,7 +115,7 @@ draw_line(Predicado, D) :-
     write('Linha entre: ('), write(X1), write(','), write(Y1), write(') e ('), write(X2), write(','), write(Y2), write(') com distância de: '), writeln(Distance),
 
     new(L, line(X1, Y1, X2, Y2)),
-    
+
     send(D, display, L).
 
 % Predicado que move o avião na tela
@@ -210,17 +210,20 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
     arg(2, Predicado, Tail),
     arg(1, Tail, Y),
 
+    arg(2, Tail, Tail2),
+    arg(2, Tail2, Nome),
+    
     write('Ponto ('),write(X),write(','),write(Y),writeln(')'),
 
-    handle_button_of_state(X, Y, D, P1, P2),
+    handle_button_of_state(X, Y, Nome, D, P1, P2),
 
     NewP2 is P2 + 20,
 
     handle_buttons_on_interface(Predicados, D, P1, NewP2).
 
 % Cria o botão na tela
-handle_button_of_state(X, Y, D, P1, P2) :-      % Conjunto de pontos(X,Y), instância da tela, valores da posição de onde os pontos são exibidos (P1, P2)
-    new(Botao, button('Maranhão')),
+handle_button_of_state(X, Y, Nome, D, P1, P2) :-      % Conjunto de pontos(X,Y), instância da tela, valores da posição de onde os pontos são exibidos (P1, P2)
+    new(Botao, button(Nome)),
     send(Botao, message, message(@prolog, handle_click, X, Y, D)),
     send(Botao, position, point(P1, P2)),
     send(D, display, Botao).
@@ -264,7 +267,7 @@ main :-
     
 
     findall((X, Y, Raio), point(X, Y, Raio, _), ListOfPointers),
-    
+    findall((X, Y, Raio, Nome), point(X, Y, Raio, Nome), ListOfPointers2),
     iterar_pontos(D, ListOfPointers),
     
     writeln('Predicados para os pontos:'),
@@ -330,7 +333,7 @@ main :-
     % writeln('Px3:'),writeln(A3),writeln(B3),
     % writeln('Px4:'),writeln(A4),writeln(B4),
 
-    handle_buttons_on_interface(ListOfPointers, D, 10, 400),
+    handle_buttons_on_interface(ListOfPointers2, D, 10, 400),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
