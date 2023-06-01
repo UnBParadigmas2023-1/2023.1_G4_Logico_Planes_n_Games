@@ -30,6 +30,24 @@ iterar_pontos(D, [Predicado|Predicados]) :-
 
     iterar_pontos(D, Predicados).
 
+iterar_voo(_, [], _).
+iterar_voo(D, [Predicado|Predicados], Posy) :-
+    arg(1, Predicado, X),
+    arg(2, Predicado, Y),
+
+    write('('),write(X),write(','),write(Y),writeln(')'),
+    new(L1, text('Belo Horizonte')),
+    send(L1, position, point(Posy, 300) ),
+    new(L2, text( ' -> ')),
+    send(L2, position, point(Posy, 320) ),
+    new(L3, text(Y)),
+    send(L3, position, point(Posy, 340) ),
+    send(D, append, L1),
+    send(D, append,L2),
+    send(D, append,L3),
+    Newy is Posy + 20,
+    iterar_voo(D, Predicados, Newy).
+
 % Predicado para desenhar os pontos
 draw_circles(D, X, Y, Raio) :-
 
@@ -120,6 +138,8 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     point(X1, Y1, _, Name1),
     point(X2, Y2, _, Name2),
     assertz(flight(Name1, Name2)),
+    findall((X, Y), flight(X, Y), ListOfflights),
+    iterar_voo(D, ListOfflights, 790),
     new(L, line(X1, Y1, X2, Y2)),
 
     send(D, display, L), 
@@ -200,7 +220,7 @@ remover_predicado(Predicado) :-
     retract(Predicado).
 
 % Exibe os botões para o usuário selecionar a origem e o destino
-handle_buttons_on_interface([], D, _, _).
+handle_buttons_on_interface([], _, _, _).
 handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
     arg(1, Predicado, X),
 
@@ -214,7 +234,7 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
 
     handle_button_of_state(X, Y, Nome, D, P1, P2),
 
-    NewP2 is P2 + 20,
+    NewP2 is P2 + 22,
 
     handle_buttons_on_interface(Predicados, D, P1, NewP2).
 
@@ -251,7 +271,7 @@ handle_click(X, Y, D) :-
 main :-
 
     new(D, picture('Sistema de Controle de Trafego Aereo')),
-    send(D, size, size(920, 800)),
+    send(D, size, size(1100, 920)),
     
     % Cria um objeto bitmap para a imagem
     new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
@@ -315,7 +335,7 @@ main :-
     % writeln('Px3:'),writeln(A3),writeln(B3),
     % writeln('Px4:'),writeln(A4),writeln(B4),
 
-    handle_buttons_on_interface(ListOfPointers2, D, 10, 400),
+    handle_buttons_on_interface(ListOfPointers2, D, 20, 343),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
