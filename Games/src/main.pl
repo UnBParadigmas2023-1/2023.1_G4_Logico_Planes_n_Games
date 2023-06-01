@@ -34,6 +34,9 @@ ir(X):-
     texto(Pos,Out),
     nl,nl,write(Out),nl.
 
+help :-
+    nl,write('Comandos comumente utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
+
 
 texto(quarto, 'Voce esta no quarto e voce ve uma cama e uma mesa.').
 texto(banheiro, 'Voce chega no banheiro e ve uma pia ').
@@ -48,3 +51,5 @@ interacao(pia, 'Voce liga e desliga a torneira, vendo que ela esta funcionando')
 
 lugar(banheiro).
 lugar(quarto).
+
+look_around(car, 'you can see ')
