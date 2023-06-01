@@ -191,7 +191,7 @@ update_position(_, _, X2, Y2, D, C, T, L, Name1) :-
     retract(flight( Name1, Name2)),
 
     findall((X, Y), flight(X, Y), ListOfflights),
-    findall((L), infoVoo(L), ListOfprints),
+    findall((L), infoVoo(L), _),
     findall((L2), infoVoo(L2), ListOfprints2),
     write(ListOfprints2),
     iterar_prints(D, ListOfprints2),
