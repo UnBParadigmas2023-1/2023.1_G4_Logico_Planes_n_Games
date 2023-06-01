@@ -136,17 +136,19 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     send(C1, fill_pattern, colour(blue)),
     send(D, display, C1),
 
-    update_position(X1, Y1, X2, Y2, D, C1, 0).
+    update_position(X1, Y1, X2, Y2, D, C1, 0, L).
 
 % Condição de parada: Eixo X e Y coincidiram com o objetivo
-update_position(_, _, _, _, _, _, T) :-
+update_position(_, _, _, _, _, C, T, L) :-
     % Quando um valor muito pequeno é utilizado para o incremento de T, maior é a dificuldade em se atingir exatamente o 
     % valor de (X2, Y2), por isso, ao invés de verificar se o ponto inicial já é igual ao ponto final,
     % optei por basear a condição de parada no valor do coeficiente T, o que atinge um certo valor ao chegar no ponto final
-    T > 0.125.
+    T > 0.125,
+    send(C, destroy),
+    send(L, destroy).
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
-update_position(X1, Y1, X2, Y2, D, C1, T) :-
+update_position(X1, Y1, X2, Y2, D, C1, T, L) :-
     % writeln('Atualizando o eixo X e Y'),
     % write('('),write(X1),write(','),write(Y1),write(')'),
     % write(' - ('),write(X2),write(','),write(Y2),writeln(')'),
@@ -167,7 +169,7 @@ update_position(X1, Y1, X2, Y2, D, C1, T) :-
     arg(1, LinePoint, NewX1),
     arg(2, LinePoint, NewY1),
 
-    update_position(NewX1, NewY1, X2, Y2, D, C1, NewT).
+    update_position(NewX1, NewY1, X2, Y2, D, C1, NewT, L).
 
 % Regra para calcular as coordenadas do ponto ao longo da linha entre A e B
 % utilizando a equação paramétrica da reta
