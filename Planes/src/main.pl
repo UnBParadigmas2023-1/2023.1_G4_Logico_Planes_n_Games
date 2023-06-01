@@ -298,6 +298,7 @@ handle_click(X, Y, D) :-
     retract(user_point_start(_,_)),
     retract(user_point_stop(_,_)),
     \+ flight(Name1, Name2),
+    Name1 \= Name2,
     thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []).
 
 
