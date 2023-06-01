@@ -27,9 +27,10 @@ acao(X):-
     nl,write(Y),nl.
 
 ir(X):- 
+    posicao(Y),
+    acessivel(Y, X),
     retract(posicao(Y)),
-    Fact =.. [posicao, X],
-    assert(Fact),
+    assert(posicao(X)),
     posicao(Pos),
     texto(Pos,Out),
     nl,nl,write(Out),nl.
@@ -41,7 +42,25 @@ texto(banheiro, 'Voce chega no banheiro e ve uma pia ').
 texto_acao(quarto, 'Acoes: acao(mesa), acao(cama).').
 texto_acao(banheiro, 'Acoes: acao(pia)').
 
-
+acessivel(carro, casa).
+acessivel(casa, carro).
+acessivel(casa, jardim).
+acessivel(jardim, casa).
+acessivel(casa, hall_entrada).
+acessivel(hall_entrada, casa).
+acessivel(hall_entrada, sala_de_estar).
+acessivel(sala_de_estar, hall_entrada).
+acessivel(hall_entrada, segundo_andar).
+acessivel(cozinha, hall_entrada).
+acessivel(hall_entrada, cozinha).
+acessivel(cozinha, dispensa).
+acessivel(dispensa, cozinha).
+acessivel(seu_quarto, segundo_andar).
+acessivel(segundo_andar, seu_quarto).
+acessivel(quarto_da_irma, segundo_andar).
+acessivel(segundo_andar, quarto_da_irma).
+acessivel(segundo_andar, banheiro).
+acessivel(banheiro, segundo_andar).
 
 interacao(mesa, 'Voce encontra uma chave').
 interacao(pia, 'Voce liga e desliga a torneira, vendo que ela esta funcionando').
