@@ -7,34 +7,32 @@
 
 :- consult('gamedata.pl').
 
-
 :- dynamic position/1.
 position(car).
 
-:- nl,write('Bem vindo ao jogo!!'),nl.
-:- write('Para ver o tutorial, digite help.'),nl,nl.
-
+:- tty_clear.
+:- write('You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
 
 game :-
+    repeat,
     write('> '),
     read(X),
     call(X),
-    game.
+    fail.
 
 use(X):- 
     interacao(X, Y), 
     nl,write(Y),nl.
 
 go_to(X):- 
-    position(Z),
-    door(Z, X),!,
-    retract(position(Z)),
-    Fact =.. [position, X],
-    assert(Fact),
-    standard_text.
-
-help :-
-    nl,write('Os principais comandos utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
+    position(Y),
+    (   door(Y, X)
+    ->  retract(position(Y)),
+        assert(position(X)),
+        standard_text
+    ;   write('Cannot go to that place.'),
+        nl, nl
+    ).
 
 lookaround:-
     position(X),
@@ -42,6 +40,7 @@ lookaround:-
     nl,write(A),nl.
 
 standard_text:-
+    tty_clear,
     position(X),
     text(X, T),
     nl,write(T),nl.
