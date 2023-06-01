@@ -372,6 +372,7 @@ main :-
     handle_buttons_on_interface(ListOfPointers2, D, 20, 343),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
+    sleep(0.5),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
 
     thread_join(ThreadId1, _),
