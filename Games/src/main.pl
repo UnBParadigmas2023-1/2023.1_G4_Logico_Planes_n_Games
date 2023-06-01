@@ -27,7 +27,7 @@ acao(X):-
     nl,write(Y),nl.
 
 ir(X):- 
-    retract(posicao(Y)),
+    retract(posicao(Pos)),
     Fact =.. [posicao, X],
     assert(Fact),
     posicao(Pos),

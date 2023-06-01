@@ -21,3 +21,26 @@ located(box,'my room').
 located(pictures,'stairwell landing').
 located(wardrobe,'sisters room').
 located(wardrobe,photographs).
+% As conexões em cada sala
+door(car,driveway).
+door(driveway,car).
+door(driveway,yard).
+door(driveway,house).
+door(yard,driveway).
+door(house,driveway).
+door(house,hallway).
+door(hallway,'living room').
+door(hallway,kitchen).
+door(hallway,'stairwell landing').
+door('living room',hallway).
+door(kitchen,'utility room').
+door('utility room',kitchen).
+door('stairwell landing',hallway).
+door('stairwell landing','sisters room').
+door('stairwell landing','my room').
+door('stairwell landing',bathroom).
+door('sisters room','stairwell landing').
+door('my room','stairwell landing').
+door(bathroom,'stairwell landing').
+
+
