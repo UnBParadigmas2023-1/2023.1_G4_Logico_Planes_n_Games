@@ -1,75 +1,58 @@
-# RepositorioTemplate
-Esse repositório é para ser utilizado pelos grupos como um template inicial, da home page do Projeto.
-As seções do Template NÃO DEVEM SER OMITIDAS, sendo TODAS RELEVANTES.
-
-**!! *Atenção: Renomeie o seu repositório para (Ano.Semestre)_(Grupo)_(Paradigma)_(NomeDoProjeto)*. !!** 
-
-Paradigmas:
- - Funcional
- - Logico
- - SMA
-
-**!! *Não coloque os nomes dos alunos no título do repositório*. !!**
-
-**!! *Exemplo de título correto: 2022.2_G1_Logico_ProjetoRoteirosAereos*. !!**
- 
- (Apague esses comentários)
-
-# NomeDoProjeto
+# Stories Untold pt1
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
-**Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: XX<br>
-**Paradigma**: XXXXXXXXXX<br>
+**Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: 04<br>
+**Paradigma**: Logico<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 18/0015834  |  Eliseu Kadesh Rosa Assunção Jr. |
+| 20/0030469  |  Felipe Candido de Moura |
+| 19/0089601  |  João Lucas Pinto Vasconcelos |
+| 15/0141629  |  Matheus Pimentel Leal |
+| 19/0038926  |  Victor Eduardo Araújo Ribeiro |
 
 ## Sobre 
-Descreva o seu projeto em linhas gerais. 
-Use referências, links, que permitam conhecer um pouco mais sobre o projeto.
-Capriche nessa seção, pois ela é a primeira a ser lida pelos interessados no projeto.
+O projeto é inspirado na parte um do jogo [Stories Untold](https://en.wikipedia.org/wiki/Stories_Untold_(video_game)), a qual se trata de um jogo text-based, em que todas as ações do jogador é realizado por meio de comandos digitado, utilizando linguagem natural.
 
 ## Screenshots
-Adicione 2 ou mais screenshots do projeto em termos de interface e/ou funcionamento.
+
 
 ## Instalação 
-**Linguagens**: xxxxxx<br>
-**Tecnologias**: xxxxxx<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
-Insira um manual ou um script para auxiliar ainda mais.
-Gifs animados e outras ilustrações são bem-vindos!
+**Linguagem**: [Prolog](https://www.swi-prolog.org/) <br>
+**Tecnologias**: [Prolog](https://www.swi-prolog.org/) <br>
 
 ## Uso 
-Explique como usar seu projeto.
-Procure ilustrar em passos, com apoio de telas do software, seja com base na interface gráfica, seja com base no terminal.
-Nessa seção, deve-se revelar de forma clara sobre o funcionamento do software.
+
 
 ## Vídeo
-Adicione 1 ou mais vídeos com a execução do projeto.
-Procure: 
-(i) Introduzir o projeto;
-(ii) Mostrar passo a passo o código, explicando-o, e deixando claro o que é de terceiros, e o que é contribuição real da equipe;
-(iii) Apresentar particularidades do Paradigma, da Linguagem, e das Tecnologias, e
-(iV) Apresentar lições aprendidas, contribuições, pendências, e ideias para trabalhos futuros.
-OBS: TODOS DEVEM PARTICIPAR, CONFERINDO PONTOS DE VISTA.
-TEMPO: +/- 15min
+
 
 ## Participações
-Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
+
 |Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
 | -- | -- | -- |
-| Fulano  |  Programação dos Fatos da Base de Conhecimento Lógica | Boa |
+|  Eliseu Kadesh Rosa Assunção Jr. | ----- | ----|
+|  Felipe Candido de Moura | ----- | |
+|  João Lucas Pinto Vasconcelos | ----- | ----|
+|  Matheus Pimentel Leal | ----- | ----|
+|  Victor Eduardo Araújo Ribeiro | ----- |----- |
 
 ## Outros 
-Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
-(i) Lições Aprendidas;
-(ii) Percepções;
-(iii) Contribuições e Fragilidades, e
-(iV) Trabalhos Futuros.
+
+### Lições Aprendidas
+Ao usar um paradigma lógico, o Prolog faz uso extensivo das entradas e saídas das máquinas de von Neumann, permitindo qualquer caminho e facilitando uma ampla variedade de programação. Além disso, o controle de fluxo dentro do código é essencial e garante um bom controle para o programador. 
+Outro aspecto fundamental desse paradigma, que também existe nos tipos funcionais, é a utilização de listas como uma das principais estruturas. E isso lida com a recursão de uma maneira quase direta.
+
+### Percepções
+
+### Contribuições e Fragilidades
+
+### Trabalhos Futuros
+Criar a continuação da parte e a equipe está avaliando a possibilidade de criar a continuação do jogo no próximo paradigma, aumentar a interação do sistema com a linguagem natural, aumentar a quantidade de barreiras para o jogador
 
 ## Fontes
-Referencie, adequadamente, as referências utilizadas.
-Indique ainda sobre fontes de leitura complementares.
+- Insipirado em: Stories Untold. Disponível em: <https://en.wikipedia.org/wiki/Stories_Untold_(video_game)>
+- Documentação do Prolog. Disponível em: <https://www.swi-prolog.org/>
+- Adventure in Prolog ™ — Prolog Tutorial: http://www.amzi.com/index.php
