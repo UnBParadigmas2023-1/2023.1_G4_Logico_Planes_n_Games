@@ -5,49 +5,53 @@
 % ir(nome_do_lugar) - Se movimenta para o lugar inserido (atualmente so quarto e banheiro disponivel).
 % acao(nome_do_alvo) - Interage com um objeto alvo (no momento apenas acao(mesa) para o quarto, e acao(pia) estao disponiveis).
 
-:- dynamic posicao/1.
-posicao(quarto).
+:- consult('gamedata.pl').
 
-:- nl,write('Bem vindo ao jogo!!'),nl.
-:- write('Para ver o tutorial, digite help.'),nl,nl.
+:- dynamic position/1.
+position(car).
 
+:- tty_clear.
+:- write('You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
 
 game :-
-    posicao(Pos),
-    nl,write('Voce esta em: '), write(Pos),nl,
-    texto_acao(Pos, Out),
-    write(Out),nl,nl,
+    repeat,
     write('> '),
     read(X),
     call(X),
-    game.
+    fail.
 
-acao(X):- 
-    interacao(X, Y), 
+use(X):-
+    interacao(X, Y),
     nl,write(Y),nl.
 
-ir(X):- 
-    retract(posicao(Pos)),
-    Fact =.. [posicao, X],
-    assert(Fact),
-    posicao(Pos),
-    texto(Pos,Out),
-    nl,nl,write(Out),nl.
+go_to(X):- 
+    position(Y),
+    (   door(Y, X)
+    ->  retract(position(Y)),
+        assert(position(X)),
+        standard_text
+    ;   write('Cannot go to that place.'),
+        nl, nl
+    ).
 
-help :-
-    nl,write('Os principais comandos utilizados são:'),nl,write('look at'),nl,write('go to'),nl,write('use'),nl,write('open'),nl,write('read'),nl.
 
-lookaround(X):-
+look(X):-
+  look_at(X, Y),
+  nl,write(Y),nl.
+
+
+lookaround:-
+    position(X),
     look_around(X, A),
     nl,write(A),nl.
+    
 
-standard_text(X):-
+standard_text:-
+    tty_clear,
+    position(X),
     text(X, T),
     nl,write(T),nl.
 
-
-texto(quarto, 'Voce esta no quarto e voce ve uma cama e uma mesa.').
-texto(banheiro, 'Voce chega no banheiro e ve uma pia ').
 
 texto_acao(quarto, 'Acoes: action(desk), action(bed).').
 texto_acao(banheiro, 'Acoes: action(sink)').
@@ -59,6 +63,7 @@ interacao(wardrobe, 'It is empty, apart from a pile of scattered photographs at 
 interacao(box, 'You unwrap the gift excitedly!...\n\nYou can\'t belive it!\n\nDad has found your old computer, a Futuro 128k +2! It\'s been preserved well in the attic and hopefully still works!').
 interacao(computer, 'You start to plug in the various cables and leads...\n\nThe Computer is all set up and ready to go. There is a game here too...').
 interacao(game, 'You put the cassette in the computer, and press play.').
+interacao('glove box', 'Inside is a key, and a handwritten note from Dad. You take both.').
 
 lugar(banheiro).
 lugar(quarto).
@@ -91,7 +96,8 @@ look_around('my room','It\'s a standard bedroom. A desk, a woodgrained TV. The u
 % o resultado do "look at" de cada objeto
 look_at(house,'The lights are all off, no one else is here.').
 look_at(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
-lookt_at(pictures, 'Family photos and holiday snaps. Our happy family.').
+look_at(pictures, 'Family photos and holiday snaps. Our happy family.').
 look_at(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
 look_at('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
 look_at(box, 'A large gift-wrapped present. The tag says your name.').
+look_at('glove box', 'The glove box is closed but appears to be unlocked.').
