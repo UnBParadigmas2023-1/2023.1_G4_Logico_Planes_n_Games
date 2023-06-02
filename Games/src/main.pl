@@ -21,8 +21,10 @@ game :-
     fail.
 
 use(X):-
-    interacao(X, Y),
-    nl,write(Y),nl.
+    position(P), located(X, P),
+    interaction(X, Y),
+    nl,write(Y),nl,!;
+    write('Nothing to use.').
 
 go_to(X):- 
     position(Y),
@@ -61,14 +63,14 @@ standard_text:-
 texto_acao(quarto, 'Acoes: action(desk), action(bed).').
 texto_acao(banheiro, 'Acoes: action(sink)').
 
-interacao(note, 'The note is from your Dad and reads:\n\nHi Son, hope you enjoy your break. Youl\'ll need to fire up the generator around back to get power and lights on.\n\nAlso, found something in the attic for you, it\'s in your room... Enjoy!').
-interacao(generator, 'You switch the generator on, and it whirrs to life. The house is still dark.').
-interacao('light switch', 'You flick the switch and the lights come on...').
-interacao(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
-interacao(box, 'You unwrap the gift excitedly!...\n\nYou can\'t belive it!\n\nDad has found your old computer, a Futuro 128k +2! It\'s been preserved well in the attic and hopefully still works!').
-interacao(computer, 'You start to plug in the various cables and leads...\n\nThe Computer is all set up and ready to go. There is a game here too...').
-interacao(game, 'You put the cassette in the computer, and press play.').
-interacao('glove box', 'Inside is a key, and a handwritten note from Dad. You take both.').
+interaction(note, 'The note is from your Dad and reads:\n\nHi Son, hope you enjoy your break. Youl\'ll need to fire up the generator around back to get power and lights on.\n\nAlso, found something in the attic for you, it\'s in your room... Enjoy!').
+interaction(generator, 'You switch the generator on, and it whirrs to life. The house is still dark.').
+interaction('light switch', 'You flick the switch and the lights come on...').
+interaction(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
+interaction(box, 'You unwrap the gift excitedly!...\n\nYou can\'t belive it!\n\nDad has found your old computer, a Futuro 128k +2! It\'s been preserved well in the attic and hopefully still works!').
+interaction(computer, 'You start to plug in the various cables and leads...\n\nThe Computer is all set up and ready to go. There is a game here too...').
+interaction(game, 'You put the cassette in the computer, and press play.').
+interaction('glove box', 'Inside is a key, and a handwritten note from Dad. You take both.').
 
 lugar(banheiro).
 lugar(quarto).
