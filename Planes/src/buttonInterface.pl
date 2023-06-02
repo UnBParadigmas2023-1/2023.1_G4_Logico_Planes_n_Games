@@ -46,9 +46,11 @@ handle_click(X, Y, D) :-
     user_point_start(Xi, Yi),
     point(Xi,Yi,_,Name1),
     point(X,Y,_,Name2),
+
     % Limpo a base para os ponto incial e final para que o usuário possa escolher novamente
     retract(user_point_start(_,_)),
     retract(user_point_stop(_,_)),
+    
     \+ flight(Name1, Name2),
     Name1 \= Name2,
-    thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []).
+    thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), _, []).

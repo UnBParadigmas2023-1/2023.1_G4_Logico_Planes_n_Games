@@ -52,9 +52,6 @@ draw_line_connection([Predicado|PredicadosRestantes], D) :-
 
 % Predicado que desenha a linha
 draw_line(Predicado, D) :-
-    % Código para processar o predicado
-    % writeln(Predicado),
-
     arg(1, Predicado, X1),              % obtem o ponto X1
 
     arg(2, Predicado, Tail1), 
@@ -89,6 +86,7 @@ move_point(PointA, PointB, D) :-                % Ponto A e B e a instância da 
     new(L, line(X1, Y1, X2, Y2)),
 
     send(D, display, L), 
+
     % Criação de um círculo que representa o avião
     new(C1, circle(10)), 
 
@@ -111,25 +109,27 @@ update_position(_, _, X2, Y2, D, C, T, L, Name1) :-
     T > 0.125,
     send(C, destroy),
     send(L, destroy),
+
     write('opa, vai um paozin de queijo ai?'),
+
     point(X2, Y2, _, Name2),
+
     retract(flight( Name1, Name2)),
 
     findall((X, Y), flight(X, Y), ListOfflights),
     findall((L), infoVoo(L), _),
     findall((L2), infoVoo(L2), ListOfprints2),
+
     write(ListOfprints2),
+
     iterar_prints(D, ListOfprints2),
     iterar_voo(D, ListOfflights, 400),
+
     write(flight(Name1, Name2)).
 
 % Atualiza a posição do ponto inicial para alcançar o ponto final
 update_position(X1, Y1, X2, Y2, D, C1, T, L, Name1) :-
-    % writeln('Atualizando o eixo X e Y'),
-    % write('('),write(X1),write(','),write(Y1),write(')'),
-    % write(' - ('),write(X2),write(','),write(Y2),writeln(')'),
-
-    sleep(0.300),
+    sleep(0.3),
     send(C1, center, point(X1, Y1)),
     send(D, display, C1),
 

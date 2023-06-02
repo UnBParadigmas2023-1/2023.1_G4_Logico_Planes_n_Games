@@ -1,3 +1,6 @@
+:- use_module(library(thread)).
+:- use_module(library(random)).
+
 % Obter e remover predicado aleatório
 obter_predicado_aleatorio(Lista, Predicado, NovaLista) :-
     random_member(Predicado, Lista),
@@ -29,17 +32,15 @@ generate_random_planes(D, ListOfPointers) :-
     arg(2, RandomPointer4, Tail4),
     arg(1, Tail4, B4),
 
-    write('Ponto aleatorio: '),writeln(RandomPointer1),
-    write('Ponto aleatorio: '),writeln(RandomPointer2),
-    write('Ponto aleatorio: '),writeln(RandomPointer3),
-    write('Ponto aleatorio: '),writeln(RandomPointer4),
-
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
+
     sleep(0.5),
+
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
 
     thread_join(ThreadId1, _),
     thread_join(ThreadId2, _),
     
     sleep(2),
+    
     generate_random_planes(D, ListOfPointers).

@@ -25,11 +25,6 @@ calc_stretching_point(X1, Y1, X2, Y2, T, point(X, Y, _)) :-
 
 % Predicado para comparar dois predicados
 handle_comparison(Predicado1, Predicado2) :-
-    % Código para comparar os predicados
-    % writeln('Comparando:'),
-    % writeln(Predicado1),
-    % writeln(Predicado2),
-    
     arg(1, Predicado1, X1),             % obtem o ponto X1
 
     arg(2, Predicado1, Tail1),          
