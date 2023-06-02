@@ -17,7 +17,7 @@ located(glovebox,car).
 located(key,car).
 located(note,car).
 located(generator,yard).
-located('light switch',hallway).
+located(light, hallway).
 located(box,'my room').
 located(pictures,'stairwell landing').
 located(wardrobe,'sisters room').
@@ -35,6 +35,7 @@ door(house,frontdoor).
 door(house,hallway).
 door(yard,house).
 door(house, yard).
+door(hallway, frontdoor).
 door(hallway, yard).
 door(hallway,'living room').
 door(kitchen, hallway).
@@ -60,16 +61,16 @@ interaction(generator, Message) :-
     Message = 'You switch the generator on, and it whirrs to life. The house is still dark.'.
 interaction(generator, 'The generator is already running.') :-
     generator_on(true).
-interaction('light switch', Message) :-
+interaction(light, Message) :-
     \+ light_on(true),
     generator_on(true),
     assert(light_on(true)),
     write('You flick the switch and the lights come on...'), nl, nl,
     Message = 'The hallway is now brightly lit. There is access to the kitchen and living room here, as well as a set of stairs going up.'.
-interaction('light switch', Message) :-
+interaction(light, Message) :-
     light_on(true),
     Message = 'The lights is already turned on'.
-interaction('light switch', Message) :-
+interaction(light, Message) :-
     Message = 'The generator is not up'.
 interaction(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
 interaction(box, Message) :-
@@ -158,7 +159,7 @@ can_look_at(house,'The lights are all off, no one else is here.').
 can_look_at(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
 can_look_at(pictures, 'Family photos and holiday snaps. Our happy family.').
 can_look_at(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
-can_look_at('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
+can_look_at(photographs, 'They are all identical. A forest road at night. You put them back.').
 can_look_at(box, 'A large gift-wrapped present. The tag says your name.').
 can_look_at(glovebox, 'The glove box is closed but appears to be unlocked.').
 can_look_inside(glovebox, 'Inside is a key, and a handwritten note from Dad. You take both.').
@@ -169,3 +170,4 @@ can_open(box).
 can_read(note).
 can_turn_on(computer).
 can_turn_on(generator).
+can_turn_on(light).
