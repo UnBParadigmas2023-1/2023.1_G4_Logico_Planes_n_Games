@@ -268,13 +268,15 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
 
     handle_button_of_state(X, Y, Nome, D, P1, P2),
 
-    NewP2 is P2 + 22,
+    NewP2 is P2 + 30,
 
     handle_buttons_on_interface(Predicados, D, P1, NewP2).
 
 % Cria o botão na tela
 handle_button_of_state(X, Y, Nome, D, P1, P2) :-      % Conjunto de pontos(X,Y), instância da tela, valores da posição de onde os pontos são exibidos (P1, P2)
     new(Botao, button(Nome)),
+    get(Botao, area, A),
+    send(A, size, size(100, 25)),
     send(Botao, message, message(@prolog, handle_click, X, Y, D)),
     send(Botao, position, point(P1, P2)),
     send(D, display, Botao).
@@ -306,7 +308,7 @@ handle_click(X, Y, D) :-
 main :-
 
     new(D, picture('Sistema de Controle de Trafego Aereo')),
-    send(D, size, size(1100, 920)),
+    send(D, size, size(1111, 834)),
     
     % Cria um objeto bitmap para a imagem
     new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
@@ -365,12 +367,7 @@ main :-
     write('Ponto aleatorio: '),writeln(RandomPointer3),
     write('Ponto aleatorio: '),writeln(RandomPointer4),
 
-    % writeln('Px1:'),writeln(A1),writeln(B1),
-    % writeln('Px2:'),writeln(A2),writeln(B2),
-    % writeln('Px3:'),writeln(A3),writeln(B3),
-    % writeln('Px4:'),writeln(A4),writeln(B4),
-
-    handle_buttons_on_interface(ListOfPointers2, D, 20, 343),
+    handle_buttons_on_interface(ListOfPointers2, D, 1000, 20),
 
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     sleep(0.5),
