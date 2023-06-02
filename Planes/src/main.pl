@@ -268,13 +268,15 @@ handle_buttons_on_interface([Predicado|Predicados], D, P1, P2) :-
 
     handle_button_of_state(X, Y, Nome, D, P1, P2),
 
-    NewP2 is P2 + 22,
+    NewP2 is P2 + 30,
 
     handle_buttons_on_interface(Predicados, D, P1, NewP2).
 
 % Cria o botão na tela
 handle_button_of_state(X, Y, Nome, D, P1, P2) :-      % Conjunto de pontos(X,Y), instância da tela, valores da posição de onde os pontos são exibidos (P1, P2)
     new(Botao, button(Nome)),
+    get(Botao, area, A),
+    send(A, size, size(100, 25)),
     send(Botao, message, message(@prolog, handle_click, X, Y, D)),
     send(Botao, position, point(P1, P2)),
     send(D, display, Botao).
@@ -303,39 +305,8 @@ handle_click(X, Y, D) :-
     thread_create(move_point(point(Xi, Yi, _), point(X, Y, _), D), ThreadId, []).
 
 
-main :-
-
-    new(D, picture('Sistema de Controle de Trafego Aereo')),
-    send(D, size, size(1100, 920)),
-    
-    % Cria um objeto bitmap para a imagem
-    new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
-
-    % Configure o tamanho e a posição do bitmap para cobrir a janela
-    send(B, size, D?size),
-    send(B, position, point(0, 0)),
-
-    % Bitmap como background da janela
-    send(D, display, B),
-    send(D, open),
-    
-
-    findall((X, Y, Raio), point(X, Y, Raio, _), ListOfPointers),
-    findall((X, Y, Raio, Nome), point(X, Y, Raio, Nome), ListOfPointers2),
-    iterar_pontos(D, ListOfPointers),
-    
-    writeln('Predicados para os pontos:'),
-    writeln(ListOfPointers),
-    
-    calc_distance_between_all_pointers(ListOfPointers),       % Adiciona o conhecimento da distância a base de dados
-    findall((X1, Y1, X2, Y2, Distance), distance(X1, Y1, X2, Y2, Distance), ListOfPointersWithDistance),
-
-    writeln('Predicado para a distância entre os pontos:'),
-    writeln(ListOfPointersWithDistance),
-
-    % Imprime os pontos para o usuário selecionar
-    iterar_predicados(ListOfPointers),
-
+% Gera avioes aleatorios
+generate_random_planes(D, ListOfPointers) :-
     obter_predicado_aleatorio(ListOfPointers, RandomPointer1, NewListOfPointers1),
     
     arg(1, RandomPointer1, A1),
@@ -365,19 +336,54 @@ main :-
     write('Ponto aleatorio: '),writeln(RandomPointer3),
     write('Ponto aleatorio: '),writeln(RandomPointer4),
 
-    % writeln('Px1:'),writeln(A1),writeln(B1),
-    % writeln('Px2:'),writeln(A2),writeln(B2),
-    % writeln('Px3:'),writeln(A3),writeln(B3),
-    % writeln('Px4:'),writeln(A4),writeln(B4),
-
-    handle_buttons_on_interface(ListOfPointers2, D, 20, 343),
-
     thread_create(move_point(point(A1, B1, _), point(A2, B2, _), D), ThreadId1, []),
     sleep(0.5),
     thread_create(move_point(point(A3, B3, _), point(A4, B4, _), D), ThreadId2, []),
 
     thread_join(ThreadId1, _),
-    thread_join(ThreadId2, _).
+    thread_join(ThreadId2, _),
+    
+    sleep(2),
+    generate_random_planes(D, ListOfPointers).
+
+main :-
+
+    new(D, picture('Sistema de Controle de Trafego Aereo')),
+    send(D, size, size(1111, 834)),
+    
+    % Cria um objeto bitmap para a imagem
+    new(B, bitmap('../assets/mapa.jpg')), % Substitua pelo caminho da sua imagem
+
+    % Configure o tamanho e a posição do bitmap para cobrir a janela
+    send(B, size, D?size),
+    send(B, position, point(0, 0)),
+
+    % Bitmap como background da janela
+    send(D, display, B),
+    send(D, open),
+    
+
+    findall((X, Y, Raio), point(X, Y, Raio, _), ListOfPointers),
+    findall((X, Y, Raio, Nome), point(X, Y, Raio, Nome), ListOfPointers2),
+    iterar_pontos(D, ListOfPointers),
+    
+    writeln('Predicados para os pontos:'),
+    writeln(ListOfPointers),
+    
+    calc_distance_between_all_pointers(ListOfPointers),       % Adiciona o conhecimento da distância a base de dados
+    findall((X1, Y1, X2, Y2, Distance), distance(X1, Y1, X2, Y2, Distance), ListOfPointersWithDistance),
+
+    writeln('Predicado para a distância entre os pontos:'),
+    writeln(ListOfPointersWithDistance),
+
+    % Imprime os pontos para o usuário selecionar
+    iterar_predicados(ListOfPointers),
+
+    handle_buttons_on_interface(ListOfPointers2, D, 1000, 20),
+
+    generate_random_planes(D, ListOfPointers).
+
+    
 
 % Chamar o predicado para desenhar os círculos espalhados
 :- initialization(main).
