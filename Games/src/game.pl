@@ -109,7 +109,7 @@ do([read, Object]):-
   can_read(Object),
   use(Object),!.
 
-do([exit, car]):-
+do([leave, car]):-
     exit_car,!.
 
 do([get, out, of, car]):-

@@ -49,7 +49,7 @@ door('utility room',kitchen).
 door('stairwell landing',hallway).
 door('stairwell landing','sisters room').
 door('stairwell landing','my room') :-
-    have_key(true).
+    has_key(true).
 door('stairwell landing',bathroom).
 door('sisters room','stairwell landing').
 door('my room','stairwell landing').
@@ -105,11 +105,11 @@ interaction(game, Message) :-
     gift_opened(false),
     Message = 'Nothing to use.'.
 interaction('glove box', Message) :-
-    \+ have_key(true),
-    assert(have_key(true)),
+    \+ has_key(true),
+    assert(has_key(true)),
     Message = 'Inside is a key, and a handwritten note from Dad. You take both.'.
 interaction('glove box', 'There is nothing left in the glove box.') :-
-    have_key(true).
+    has_key(true).
 
 % Texto padrão da localização
 text(car,'You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
