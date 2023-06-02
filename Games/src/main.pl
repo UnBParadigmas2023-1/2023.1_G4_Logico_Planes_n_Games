@@ -56,6 +56,9 @@ interacao(note, 'The note is from your Dad and reads:\n\nHi Son, hope you enjoy 
 interacao(generator, 'You switch the generator on, and it whirrs to life. The house is still dark.').
 interacao('light switch', 'You flick the switch and the lights come on...').
 interacao(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
+interacao(box, 'You unwrap the gift excitedly!...\n\nYou can\'t belive it!\n\nDad has found your old computer, a Futuro 128k +2! It\'s been preserved well in the attic and hopefully still works!').
+interacao(computer, 'You start to plug in the various cables and leads...\n\nThe Computer is all set up and ready to go. There is a game here too...').
+interacao(game, 'You put the cassette in the computer, and press play.').
 
 lugar(banheiro).
 lugar(quarto).
@@ -71,7 +74,7 @@ text('stairwell landing', 'The stairwell landing. There is bathroom, and two bed
 text(bathroom, 'You are in the bathroom. There\'s not much to note, but it\'s all in good order.').
 text('sisters room','Your sisters room is in perfect condition, untouched since the last time you had seen her. Posters of her heroes and some of her own attempts at art adorn the walls.\n\nA few shelves are crammed full of trophies. Her bed is drowned under a pile of colourful soft toys.\n\nA real nostalgia trip!').
 text('my room','Your old bedroom. So many good memories in here, and it\'s been preserved so well.\n\nOn the desk is a gift wrapped box.').
-
+text('my room','Your old bedroom. So many good memories in here, and it\'s been preserved so well.\n\nOn the desk is a Futuro 128k +2 computer, and a copy of The House Abandon. It\'s all still to be set up though.').
 
 % o resultado do look around em cada posição.
 look_around(car,'It\'s a nice clean car. Not much to see, but there is a glove box.').
