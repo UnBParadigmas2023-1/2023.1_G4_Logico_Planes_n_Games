@@ -3,6 +3,14 @@
 user_input(String) :-
   write("> "), readln(String).
 
+do([go, to, house]) :-
+    go_to(house),
+    go_to(hallway), !.
+
+do([go, inside, house]) :-
+  go_to(house),
+  go_to(hallway), !.
+
 do([go, to, Direction]) :-
   room(Direction),
   go_to(Direction), !.
@@ -31,6 +39,12 @@ do([turn, on, Object]):-
 do([read, Object]):-
   can_read(Object),
   use(Object),!.
+
+do([exit, car]):-
+    exit_car,!.
+
+do([get, out, of, car]):-
+    exit_car,!.
 
 do([quit]).
 

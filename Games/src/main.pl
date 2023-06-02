@@ -37,6 +37,7 @@ look_at(X):-
       position(P), door(P, X)
     ),
     can_look_at(X, Y),
+    tty_clear,
     nl,write(Y),nl,!;
     tty_clear,
     write('Nothing to look at.').
@@ -67,3 +68,9 @@ standard_text:-
     text(X, T),
     tty_clear,
     nl,write(T),nl.
+
+exit_car:-
+    tty_clear,
+    nl,write("You open the car door and step out..."),nl,
+    sleep(3),
+    go_to(frontdoor).

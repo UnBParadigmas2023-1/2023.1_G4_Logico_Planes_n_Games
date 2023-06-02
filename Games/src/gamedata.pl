@@ -30,11 +30,9 @@ door(frontdoor, house).
 door(frontdoor, yard).
 door(yard, frontdoor).
 door(house,frontdoor).
+door(house,hallway).
 door(yard,house).
 door(house, yard).
-door(house,'living room').
-door(house,kitchen).
-door(house,'stairwell landing').
 door(hallway, yard).
 door(hallway,'living room').
 door(hallway,kitchen).
