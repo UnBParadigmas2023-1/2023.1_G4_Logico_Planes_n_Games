@@ -49,13 +49,13 @@ standard_text(X):-
 texto(quarto, 'Voce esta no quarto e voce ve uma cama e uma mesa.').
 texto(banheiro, 'Voce chega no banheiro e ve uma pia ').
 
-texto_acao(quarto, 'Acoes: acao(mesa), acao(cama).').
-texto_acao(banheiro, 'Acoes: acao(pia)').
+texto_acao(quarto, 'Acoes: action(desk), action(bed).').
+texto_acao(banheiro, 'Acoes: action(sink)').
 
-
-
-interacao(mesa, 'Voce encontra uma chave').
-interacao(pia, 'Voce liga e desliga a torneira, vendo que ela esta funcionando').
+interacao(note, 'The note is from your Dad and reads:\n\nHi Son, hope you enjoy your break. Youl\'ll need to fire up the generator around back to get power and lights on.\n\nAlso, found something in the attic for you, it\'s in your room... Enjoy!').
+interacao(generator, 'You switch the generator on, and it whirrs to life. The house is still dark.').
+interacao('light switch', 'You flick the switch and the lights come on...').
+interacao(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
 
 lugar(banheiro).
 lugar(quarto).
@@ -84,3 +84,11 @@ look_around('stairwell landing', 'A standard landing. There are picture frames c
 look_around(bathroom, 'The bathroom is clean. A large mirror sits above the sink.').
 look_around('sisters room','There is also a large wardrobe in the corner of the room - the door slightly ajar.').
 look_around('my room','It\'s a standard bedroom. A desk, a woodgrained TV. The usual.').
+
+% o resultado do "look at" de cada objeto
+look_at(house,'The lights are all off, no one else is here.').
+look_at(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
+lookt_at(pictures, 'Family photos and holiday snaps. Our happy family.').
+look_at(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
+look_at('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
+look_at(box, 'A large gift-wrapped present. The tag says your name.').
