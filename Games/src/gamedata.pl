@@ -10,11 +10,12 @@ room('stairwell landing').
 room('sisters room').
 room('my room').
 room(bathroom).
+room(frontdoor).
 
 % Localização dos itens
-located('glove box',car).
-located(key,'glove box').
-located('note from dad','glove box').
+located(glovebox,car).
+located(key,car).
+located(note,car).
 located(generator,yard).
 located('light switch',hallway).
 located(box,'my room').
@@ -25,12 +26,16 @@ located(computer,'my room').
 located(game,'my room').
 
 % As conexões em cada sala
-door(car,house).
-door(house,car).
-door(house,yard).
+door(car,frontdoor).
+door(frontdoor, car).
+door(frontdoor, house).
+door(frontdoor, yard).
+door(yard, frontdoor).
+door(house,frontdoor).
 door(house,hallway).
 door(yard,house).
-door(hallway,house).
+door(house, yard).
+door(hallway, yard).
 door(hallway,'living room').
 door(kitchen, hallway).
 door(hallway,kitchen) :-
@@ -108,8 +113,9 @@ interaction('glove box', 'There is nothing left in the glove box.') :-
 
 % Texto padrão da localização
 text(car,'You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
-text(house,'The house is grand, sat perfectly amongst the trees.\n\nIn front of you is the front door, and the yard stretches around the side of the house.').
+text(frontdoor,'The house is grand, sat perfectly amongst the trees.\n\nIn front of you is the front door, and the yard stretches around the side of the house.').
 text(yard,'The yard has been well maintained. You spent a lot of time here with your family on holiday trips. Good memories.').
+text(house,'You enter the house to the hallway. It\'s dark and you can\'t see anything. You feel a light switch next to the door however.'). % luzes apagadas.
 text(hallway, Text) :-
     light_on(true),
     Text = 'Now you are in hallway. There is access to the kitchen and living room here, as well as a set of stairs going up.'.
@@ -130,7 +136,7 @@ text('my room', Message) :-
 
 % o resultado do look around em cada posição.
 look_around(car,'It\'s a nice clean car. Not much to see, but there is a glove box.').
-look_around(house,'The trees strech up to the night sky. There is the house and the yard.').
+look_around(frontdoor,'The trees strech up to the night sky. There is the house and the yard.').
 look_around(yard,'You see a generator on the back wall of the house').
 look_around(hallway,'The hallway is a pleasant welcome to the home. Airy and fresh.').
 look_around('living room', 'There is nothing here of interest.').
@@ -141,10 +147,18 @@ look_around('sisters room','There is also a large wardrobe in the corner of the 
 look_around('my room','It\'s a standard bedroom. A desk, a woodgrained TV. The usual.').
 
 % o resultado do "look at" de cada objeto
-look(house,'The lights are all off, no one else is here.').
-look(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
-look(pictures, 'Family photos and holiday snaps. Our happy family.').
-look(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
-look('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
-look(box, 'A large gift-wrapped present. The tag says your name.').
-look('glove box', 'The glove box is closed but appears to be unlocked.').
+can_look_at(house,'The lights are all off, no one else is here.').
+can_look_at(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
+can_look_at(pictures, 'Family photos and holiday snaps. Our happy family.').
+can_look_at(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
+can_look_at('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
+can_look_at(box, 'A large gift-wrapped present. The tag says your name.').
+can_look_at(glovebox, 'The glove box is closed but appears to be unlocked.').
+can_look_inside(glovebox, 'Inside is a key, and a handwritten note from Dad. You take both.').
+can_look_inside(wardrobe, 'It is empty, apart from a pile of scattered photographs at the bottom.').
+
+can_open(frontdoor).
+can_open(box).
+can_read(note).
+can_turn_on(computer).
+can_turn_on(generator).
