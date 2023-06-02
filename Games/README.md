@@ -1,75 +1,97 @@
-# RepositorioTemplate
-Esse repositório é para ser utilizado pelos grupos como um template inicial, da home page do Projeto.
-As seções do Template NÃO DEVEM SER OMITIDAS, sendo TODAS RELEVANTES.
-
-**!! *Atenção: Renomeie o seu repositório para (Ano.Semestre)_(Grupo)_(Paradigma)_(NomeDoProjeto)*. !!** 
-
-Paradigmas:
- - Funcional
- - Logico
- - SMA
-
-**!! *Não coloque os nomes dos alunos no título do repositório*. !!**
-
-**!! *Exemplo de título correto: 2022.2_G1_Logico_ProjetoRoteirosAereos*. !!**
- 
- (Apague esses comentários)
-
-# NomeDoProjeto
+# Stories Untold em Prolog
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
-**Nro do Grupo (de acordo com a Planilha de Divisão dos Grupos)**: XX<br>
-**Paradigma**: XXXXXXXXXX<br>
+**Número do Grupo**: 04<br>
+**Paradigma**: Lógico<br>
 
 ## Alunos
+
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| - | Elizeu Kadesh |
+| 20/0030469  |  Felipe Candido de Moura  |
+| -  |  João Lucas Pinto         |
+| - |  Matheus Pimentel |
+| -  | Victor Eduardo Araújo Ribeiro  |
 
-## Sobre 
-Descreva o seu projeto em linhas gerais. 
-Use referências, links, que permitam conhecer um pouco mais sobre o projeto.
-Capriche nessa seção, pois ela é a primeira a ser lida pelos interessados no projeto.
+## Sobre
+
+O projeto Games, consiste em uma reprodução do capítulo 1 do jogo _Stories Untold_ chamado de the _The House Abandon_ em Prolog. O jogo é baseado em texto e tem como objetivo explorar uma casa e chegar em um determinado evento baseando-se apenas nas descrições que serão dadas, e na intuição do próprio jogador.
 
 ## Screenshots
-Adicione 2 ou mais screenshots do projeto em termos de interface e/ou funcionamento.
 
-## Instalação 
-**Linguagens**: xxxxxx<br>
-**Tecnologias**: xxxxxx<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
-Insira um manual ou um script para auxiliar ainda mais.
-Gifs animados e outras ilustrações são bem-vindos!
+ADD IMAGEM DO JOGO
 
-## Uso 
-Explique como usar seu projeto.
-Procure ilustrar em passos, com apoio de telas do software, seja com base na interface gráfica, seja com base no terminal.
-Nessa seção, deve-se revelar de forma clara sobre o funcionamento do software.
+## Instalação
 
-## Vídeo
-Adicione 1 ou mais vídeos com a execução do projeto.
-Procure: 
-(i) Introduzir o projeto;
-(ii) Mostrar passo a passo o código, explicando-o, e deixando claro o que é de terceiros, e o que é contribuição real da equipe;
-(iii) Apresentar particularidades do Paradigma, da Linguagem, e das Tecnologias, e
-(iV) Apresentar lições aprendidas, contribuições, pendências, e ideias para trabalhos futuros.
-OBS: TODOS DEVEM PARTICIPAR, CONFERINDO PONTOS DE VISTA.
-TEMPO: +/- 15min
+**Linguagens**: *Prolog*<br>
+**Tecnologias**: *SWI-Prolog*<br>
+
+### Pré-requisitos
+
+- Ter o [*SWI-Prolog*](https://www.swi-prolog.org/Download.html) instalado em sua máquina.
+
+### Como executar o projeto?
+
+Primeiramente, clone o repositório em sua máquina:
+
+```
+git clone git@github.com:UnBParadigmas2023-1/2023.1_G4_Logico_Planes_n_Games.git
+```
+
+Logo após, vá até a pasta *src* da área do projeto *Games*:
+
+```
+cd 2023.1_G4_Logico_Planes_n_Games/Games/src
+```
+
+Por fim executar o SWI e carregar o arquivo principal do jogo*:
+
+```
+swipl main.pl
+```
+
+## Uso
+
+Basicamente o jogador vai inserir os comandos que quer realizar. Esses tendem a ser bem intuitívos ao que se quer fazer, por isso incentivamos a testar as idéias que tiver em mente.
+
+OBS: Os comandos devem ser todos em Inglês.
+
+Caso tenha alguma dificuldade, seguem abaixo alguns comandos comuns:
+
+- lookaround
+- look at (nome do que quer olhar)
+- go to (nome do local)
 
 ## Participações
-Apresente, brevemente, como cada membro do grupo contribuiu para o projeto.
+
 |Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
 | -- | -- | -- |
-| Fulano  |  Programação dos Fatos da Base de Conhecimento Lógica | Boa |
+|  Elizeu Kadesh     | - |  Excelente  |
+| Felipe Candido de Moura | Desenvolvimento das mecânicas básicas de movimentação e ajuda geral nas bases de dados e no projeto |  Excelente  |
+| João Lucas Pinto  |      -     |  Excelente  |
+| Matheus Pimentel  |      -      |  Excelente  |
+| Victor Eduardo Araújo Ribeiro| | Excelente |
 
-## Outros 
-Quaisquer outras informações sobre o projeto podem ser descritas aqui. Não esqueça, entretanto, de informar sobre:
-(i) Lições Aprendidas;
-(ii) Percepções;
-(iii) Contribuições e Fragilidades, e
-(iV) Trabalhos Futuros.
+- Grande parte do projeto foi desenvolvido em conjunto por meio do _Pair Programming_.
+
+## Outros
+
+
+### Lições Aprendidas
+
+
+### Percepções
+
+
+### Contribuições e Fragilidades
+
+
+### Trabalhos Futuros
+
+
 
 ## Fontes
-Referencie, adequadamente, as referências utilizadas.
-Indique ainda sobre fontes de leitura complementares.
+
+- Jogo Stories Untold: [Página na Steam](https://store.steampowered.com/app/558420/Stories_Untold/).
+- Guia de Jogo em texto em Prolog: [Amzi - Adventure in Prolog](http://www.amzi.com/AdventureInProlog/a1start.php).
