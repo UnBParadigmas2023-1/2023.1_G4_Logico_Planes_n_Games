@@ -98,4 +98,3 @@ can_open(box).
 can_read(note).
 can_turn_on(computer).
 can_turn_on(generator).
-
