@@ -35,9 +35,14 @@ go_to(X):-
     ).
 
 
-look(X):-
-  look_at(X, Y),
-  nl,write(Y),nl.
+look_at(X):-
+    (
+      position(P), located(X, P);
+      position(X)
+    ),
+    look(X, Y),
+    nl,write(Y),nl,!;
+    write('Nothing to look at.').
 
 
 lookaround:-
@@ -94,10 +99,10 @@ look_around('sisters room','There is also a large wardrobe in the corner of the 
 look_around('my room','It\'s a standard bedroom. A desk, a woodgrained TV. The usual.').
 
 % o resultado do "look at" de cada objeto
-look_at(house,'The lights are all off, no one else is here.').
-look_at(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
-look_at(pictures, 'Family photos and holiday snaps. Our happy family.').
-look_at(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
-look_at('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
-look_at(box, 'A large gift-wrapped present. The tag says your name.').
-look_at('glove box', 'The glove box is closed but appears to be unlocked.').
+look(house,'The lights are all off, no one else is here.').
+look(yard, 'The spacious yard extends around to the back of the house. A great place to relax in the long summers.').
+look(pictures, 'Family photos and holiday snaps. Our happy family.').
+look(wardrobe, 'A large clothes wardrobe. Unusually, the door is slightly ajar.\n\nShe never liked you going through he stuff.').
+look('wardrobe photographs', 'They are all identical. A forest road at night. You put them back.').
+look(box, 'A large gift-wrapped present. The tag says your name.').
+look('glove box', 'The glove box is closed but appears to be unlocked.').
