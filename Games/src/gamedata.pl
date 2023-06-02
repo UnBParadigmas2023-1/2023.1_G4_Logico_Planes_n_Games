@@ -38,12 +38,9 @@ door(house, yard).
 door(hallway, yard).
 door(hallway,'living room').
 door(kitchen, hallway).
-door(hallway,kitchen) :-
-    light_on(true).
-door(hallway,'stairwell landing') :-
-    light_on(true). 
-door('living room',hallway) :-
-    light_on(true).
+door(hallway,kitchen).
+door(hallway,'stairwell landing').
+door('living room',hallway).
 door(kitchen,'utility room').
 door('utility room',kitchen).
 door('stairwell landing',hallway).
@@ -122,9 +119,19 @@ text(hallway, Text) :-
 text(hallway, Text) :-
     light_on(false),
     Text = 'You enter the house to the hallway. It\'s dark and you can\'t see anything. You feel a light switch next to the door however.'.
-text('living room', 'A spacious and comfortable living room. We spenta lot of good time in here playing board games with the family. Warm and inviting.').
-text(kitchen,'The kitchen is tidy and well kept. There is a door to a utility room, but otherwise, it\' just a kitchen.').
-text('stairwell landing', 'The stairwell landing. There is bathroom, and two bedrooms: yours and your sisters.\n\nPictures adorn the walls; images of happy times.').
+text('living room', 'A spacious and comfortable living room. We spenta lot of good time in here playing board games with the family. Warm and inviting.') :-
+    light_on(true).
+text('living room', 'You enter in the living room. It\'s dark and you can\'t see anything.') :-
+    light_on(false).
+text(kitchen, Message) :-
+    light_on(true),
+    Message = 'You are in the kitchen. It\'s a mess, but there is a door to a utility room here. There is also a door to the hallway.'.
+text(kitchen,'You enter the house to the kitchen. It\'s dark and you can\'t see anything.') :-
+    light_on(false).
+text('stairwell landing', 'The stairwell landing. There is bathroom, and two bedrooms: yours and your sisters.\n\nPictures adorn the walls; images of happy times.') :-
+    light_on(true).
+text('stairwell landing', 'You enter in the stairwell landing. It\'s dark and you can\'t see anything.') :-
+    light_on(false).
 text(bathroom, 'You are in the bathroom. There\'s not much to note, but it\'s all in good order.').
 text('sisters room','Your sisters room is in perfect condition, untouched since the last time you had seen her. Posters of her heroes and some of her own attempts at art adorn the walls.\n\nA few shelves are crammed full of trophies. Her bed is drowned under a pile of colourful soft toys.\n\nA real nostalgia trip!').
 text('my room', Message) :-
