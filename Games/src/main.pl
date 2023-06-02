@@ -8,21 +8,15 @@
 :- consult('gamedata.pl').
 
 :- dynamic position/1.
+
 position(car).
-
-:- tty_clear.
-:- write('You pull up to the driveway of the family holiday home and park the car. It\'s dark, but it\'s as idyllic as you remember from all that time ago. You remember being told to look in the glove box before going in.\n\nIts good be back.').
-
-game :-
-    repeat,
-    read(X),
-    call(X),
-    fail.
 
 use(X):-
     position(P), located(X, P),
     interaction(X, Y),
+    tty_clear,
     nl,write(Y),nl,!;
+    tty_clear,
     write('Nothing to use.').
 
 go_to(X):- 
@@ -30,8 +24,9 @@ go_to(X):-
     (   door(Y, X)
     ->  retract(position(Y)),
         assert(position(X)),
-        standard_text
-    ;   write('Cannot go to that place.'),
+        standard_text;
+        tty_clear,
+        write('Cannot go to that place.'),
         nl, nl
     ).
 
@@ -39,16 +34,30 @@ go_to(X):-
 look_at(X):-
     (
       position(P), located(X, P);
-      position(X)
+      position(P), door(P, X)
     ),
-    look(X, Y),
+    can_look_at(X, Y),
     nl,write(Y),nl,!;
+    tty_clear,
     write('Nothing to look at.').
+
+
+look_inside(X):-
+  (
+    position(P), located(X, P);
+    position(X)
+  ),
+  can_look_inside(X, Y),
+  tty_clear,
+  nl,write(Y),nl,!;
+  tty_clear,
+  write('Nothing to look inside.').
 
 
 lookaround:-
     position(X),
     look_around(X, A),
+    tty_clear,
     nl,write(A),nl.
     
 
@@ -56,4 +65,5 @@ standard_text:-
     tty_clear,
     position(X),
     text(X, T),
+    tty_clear,
     nl,write(T),nl.
