@@ -70,6 +70,8 @@ Após selecionados os pontos de partida e destino, será apresentada visualmente
 
 ❗ Mas atenção novamente! Não é possível fazer com que outro avião percorra o mesmo trajeto (na mesma ordem de partida e chegada) enquanto houver outro avião percorrendo a rota. Isso não vale para caso seja requisitada a rota inversa.
 
+![Instruções de Uso](https://github.com/UnBParadigmas2023-1/2023.1_G4_Logico_Planes_n_Games/assets/72149063/e21fb8bc-7118-413d-ba95-bb05955f2780)
+
 ## Participações
 
 |Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
