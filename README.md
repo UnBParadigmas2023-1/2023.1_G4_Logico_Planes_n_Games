@@ -29,7 +29,7 @@ Foram criados dois projetos, o planes e o games, para mais informações veja re
 ## Instalação
 
 **Linguagens**: Prolog<br>
-**Tecnologias**: SWIProlog<br>
+**Tecnologias**: SWI-Prolog<br>
 
 
 ## Uso
@@ -39,6 +39,8 @@ Vide README de cada sistema.
 ## Vídeo
 
 [Gravação da apresentação dia 02/06/23](https://unbbr.sharepoint.com/:v:/s/ParadigmasGrupo04/EWB4aHvYSx9AqDuSIBvkHgcBsapW6YJLlglmmFIC3_2Tcg?e=uektfh)
+
+[Apresentação disponibilizada no YouTube](https://youtu.be/z6qPSA4zP24)
 
 ## Participações
 
