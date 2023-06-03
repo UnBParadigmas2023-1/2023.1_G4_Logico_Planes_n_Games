@@ -8,11 +8,11 @@
 
 |Matrícula | Aluno |
 | -- | -- |
-| - | Elizeu Kadesh |
+| 18/0015834 | Elizeu Kadesh |
 | 20/0030469  |  Felipe Candido de Moura  |
-| -  |  João Lucas Pinto         |
-| - |  Matheus Pimentel |
-| -  | Victor Eduardo Araújo Ribeiro  |
+| 19/0089601  |  João Lucas Pinto         |
+| 15/0141629 |  Matheus Pimentel |
+| 19/0038926  | Victor Eduardo Araújo Ribeiro  |
 
 ## Sobre
 
@@ -20,7 +20,7 @@ O projeto Games, consiste em uma reprodução do capítulo 1 do jogo _Stories Un
 
 ## Screenshots
 
-ADD IMAGEM DO JOGO
+![Fluxo do Jogo](./assets/Fluxo_Stories_Untold.jpg)
 
 ## Instalação
 
@@ -67,29 +67,33 @@ Caso tenha alguma dificuldade, seguem abaixo alguns comandos comuns:
 
 |Nome do Membro | Contribuição | Significância da Contribuição para o Projeto (Excelente/Boa/Regular/Ruim/Nula) |
 | -- | -- | -- |
-|  Elizeu Kadesh     | - |  Excelente  |
-| Felipe Candido de Moura | Desenvolvimento das mecânicas básicas de movimentação e ajuda geral nas bases de dados e no projeto |  Excelente  |
-| João Lucas Pinto  |      -     |  Excelente  |
-| Matheus Pimentel  |      -      |  Excelente  |
-| Victor Eduardo Araújo Ribeiro| | Excelente |
+|  Elizeu Kadesh     | Adição de interações, função de "look at" e implementação de linguagem natural                                    |  Excelente  |
+| Felipe Candido de Moura | Desenvolvimento das mecânicas básicas de movimentação e interação, loop do game e ajuda geral no projeto     |  Excelente  |
+| João Lucas Pinto  |    Adição do look around, menu help, "doors", e transcrição das mensagens padrões do jogo                         |  Excelente  |
+| Matheus Pimentel  |  Adicao de regras e localizacao, ajuda na funcao "look at", integracao da linguagem natural e o projeto em prolog |  Excelente  |
+| Victor Eduardo Araújo Ribeiro|   Fiz a função de movimentação (go_to), e as restrições de movimentação, uso/interação                  |  Excelente  |
 
 - Grande parte do projeto foi desenvolvido em conjunto por meio do _Pair Programming_.
 
 ## Outros
 
-
 ### Lições Aprendidas
-
+- Pensar no paradigma lógico, focando em fatos e regras de associação.
+- Não depender dos operadores de condição.
+- Usar o operador cut.
+- Aprender a definir linguagem natural em Prolog.
 
 ### Percepções
-
+- A facilidade em termos da programação em si, por ser mais próximo a linguagem natural.
+- A diferença entre os paradigmas lógico e funcional, principalmente por um ser mais matemática.
 
 ### Contribuições e Fragilidades
-
+- Dificuldade de identificar os erros.
+- Dificuldade em raciocinar no paradigma lógico, à principio.
 
 ### Trabalhos Futuros
-
-
+- Melhorar o jogo, adicionando complexidade.
+- Fazer o segundo loop do jogo.
 
 ## Fontes
 
